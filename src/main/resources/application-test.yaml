@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: eshop-catalog-service
+  r2dbc:
+    url: r2dbc:postgresql://postgres@localhost:5432
+    name: eshop-product-catalog-test
+    username: postgres-test
+    password: postgres-test
+logging:
+  level:
+    org.springframework.r2dbc: debug
+    org.springframework.web: debug
+    root: warn
