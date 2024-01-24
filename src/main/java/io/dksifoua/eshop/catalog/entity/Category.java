@@ -2,6 +2,7 @@ package io.dksifoua.eshop.catalog.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -9,8 +10,9 @@ import org.springframework.data.relational.core.mapping.Table;
 
 
 @EqualsAndHashCode(callSuper = true)
-@Data
 @SuperBuilder
+@Data
+@NoArgsConstructor
 @Table("CATEGORY")
 public class Category extends AbstractAudit {
 

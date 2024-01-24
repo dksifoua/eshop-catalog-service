@@ -5,6 +5,7 @@ import io.dksifoua.eshop.catalog.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
@@ -17,6 +18,11 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<CategoryDTO> create(@RequestBody CategoryDTO categoryDTO) {
-        return categoryService.save(categoryDTO);
+        return categoryService.create(categoryDTO);
+    }
+
+    @GetMapping
+    public Flux<CategoryDTO> list() {
+        return categoryService.getAll();
     }
 }

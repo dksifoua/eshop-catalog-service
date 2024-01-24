@@ -27,7 +27,7 @@ public class CategoryControllerIntegrationTests extends AbstractContainerBaseTes
     @Order(1)
     @DisplayName("Create a new category test.")
     public void createNewCategoryTest() {
-        CategoryDTO categoryDTO = CategoryDTO.builder()
+        CategoryDTO categoryDTO  = CategoryDTO.builder()
                 .name("Furniture")
                 .description("Wide range of furniture for home, office, and outdoors.")
                 .build();
@@ -37,10 +37,23 @@ public class CategoryControllerIntegrationTests extends AbstractContainerBaseTes
                 .body(Mono.just(categoryDTO), Category.class)
                 .exchange()
                 .expectStatus()
-                    .isCreated()
+                .isCreated()
                 .expectBody()
-                    .consumeWith(System.out::println)
-                    .jsonPath("$.name").isEqualTo(categoryDTO.getName())
-                    .jsonPath("$.description").isEqualTo(categoryDTO.getDescription());
+                .consumeWith(System.out::println)
+                .jsonPath("$.name").isEqualTo(categoryDTO.getName())
+                .jsonPath("$.description").isEqualTo(categoryDTO.getDescription());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("Get All Product Catalog Categories")
+    void getAllProductCatalogCategories() {
+        webTestClient.get().uri("/api/v1/catalog/categories")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBodyList(CategoryDTO.class)
+                .consumeWith(System.out::println);
     }
 }
