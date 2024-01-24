@@ -1,4 +1,4 @@
-.PHONY: clean, postgres, test
+.PHONY: clean, dev, postgres, test
 
 clean:
 	@echo "⏱️Cleaning up..."
@@ -17,6 +17,9 @@ postgres:
 		--env POSTGRES_PASSWORD=postgres \
 		--env POSTGRES_DB=eshop-product-catalog \
 		--detach postgres
+
+dev: postgres
+	@./gradlew bootRun
 
 test:
 	@./gradlew test
