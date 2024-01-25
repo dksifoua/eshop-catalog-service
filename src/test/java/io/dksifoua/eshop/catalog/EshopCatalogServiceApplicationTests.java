@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(locations = "classpath:application-test.yaml")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class EshopCatalogServiceApplicationTests extends AbstractContainerBaseTest {
+class EshopCatalogServiceApplicationTests extends AbstractContainerBase {
 
 	@Test
 	void contextLoads() {
