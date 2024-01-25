@@ -1,3 +1,5 @@
+app:
+  context-path: /api/v1/catalog
 server:
   port: 8080
 spring:
@@ -10,6 +12,6 @@ spring:
     password: postgres
 logging:
   level:
-    org.springframework.r2dbc: info
-    org.springframework.web: info
+    org.springframework.r2dbc: debug
+    org.springframework.web: debug
     root: warn

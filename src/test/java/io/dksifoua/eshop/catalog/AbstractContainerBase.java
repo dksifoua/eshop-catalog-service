@@ -6,7 +6,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AbstractContainerBaseTest {
+public class AbstractContainerBase {
 
     protected static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER;
 
@@ -26,6 +26,6 @@ public class AbstractContainerBaseTest {
 
     @DynamicPropertySource
     public static void registerDatabasePropertiesToApplicationContext(DynamicPropertyRegistry registry) {
-        registry.add("spring.r2dbc.url", AbstractContainerBaseTest::getR2dbcUrl);
+        registry.add("spring.r2dbc.url", AbstractContainerBase::getR2dbcUrl);
     }
 }
