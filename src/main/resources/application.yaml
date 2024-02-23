@@ -1,17 +1,21 @@
 app:
   context-path: /api/v1/catalog
+  endpoints:
+    categories: /categories
+logging:
+  level:
+    org.springframework.web: debug
+    org.springframework.web.reactive: debug
 server:
   port: 8080
 spring:
   application:
-    name: eshop-catalog-service
-  r2dbc:
-    url: r2dbc:postgresql://postgres@localhost:5432
     name: eshop-product-catalog
-    username: postgres
-    password: postgres
-logging:
-  level:
-    org.springframework.r2dbc: debug
-    org.springframework.web: debug
-    root: warn
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+      username: dksifoua
+      password: dksifoua
+      database: admin
+      authentication-database: admin
