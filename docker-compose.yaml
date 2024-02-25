@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongodb/mongodb-community-server:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dksifoua
+      MONGO_INITDB_ROOT_PASSWORD: dksifoua
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_conf:/data/configdb
+      - mongodb_data:/data/db
+volumes:
+  mongodb_conf: {}
+  mongodb_data: {}
