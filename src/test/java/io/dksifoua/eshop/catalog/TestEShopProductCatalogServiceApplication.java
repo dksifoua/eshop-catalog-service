@@ -13,11 +13,13 @@ public class TestEShopProductCatalogServiceApplication {
     @Bean
     @ServiceConnection
     MongoDBContainer mongoDbContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongodb/mongodb-community-server:latest"));
+        return new MongoDBContainer(DockerImageName.parse("mongo"));
     }
 
     public static void main(String[] args) {
-        SpringApplication.from(EShopProductCatalogServiceApplication::main).with(TestEShopProductCatalogServiceApplication.class).run(args);
+        SpringApplication
+                .from(EShopProductCatalogServiceApplication::main)
+                .with(TestEShopProductCatalogServiceApplication.class).run(args);
     }
 
 }

@@ -1,5 +1,6 @@
 package io.dksifoua.eshop.catalog.category;
 
+import io.dksifoua.eshop.catalog.TestEShopProductCatalogServiceApplication;
 import io.dksifoua.eshop.catalog.utility.Active;
 import io.dksifoua.eshop.catalog.utility.Audit;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,10 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 @AutoConfigureWebTestClient
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+        classes = TestEShopProductCatalogServiceApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 public class CategoryHandlerIntegrationTests {
 
     @Value("${app.context-path}" + "${app.endpoints.categories}")
