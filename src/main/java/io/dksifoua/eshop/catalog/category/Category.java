@@ -1,8 +1,15 @@
 package io.dksifoua.eshop.catalog.category;
 
+import io.dksifoua.eshop.catalog.utility.Active;
+import io.dksifoua.eshop.catalog.utility.Audit;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
+@Data
+@Builder
 @Document(collection = "categories")
 public class Category {
 
@@ -10,25 +17,7 @@ public class Category {
     private String id;
     private String name;
     private String description;
-
-    public Category(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private String parentId;
+    private Active active;
+    private Audit audit;
 }

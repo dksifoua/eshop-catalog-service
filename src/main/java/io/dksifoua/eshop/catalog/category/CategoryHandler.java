@@ -1,21 +1,13 @@
 package io.dksifoua.eshop.catalog.category;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-
-@Component
+@Configuration
 public class CategoryHandler {
-
-    @Value("${app.context-path}"+"${app.endpoints.categories}")
-    private String categoryEndpoint;
 
     private final CategoryService categoryService;
 
@@ -23,20 +15,15 @@ public class CategoryHandler {
         this.categoryService = categoryService;
     }
 
-    @Bean
-    public RouterFunction<ServerResponse> categoryRoutes() {
-        return route()
-                .GET(categoryEndpoint, this::listCategories)
-                .build();
+    public Mono<ServerResponse> listCategories() {
+        return ServerResponse.ok().body(categoryService.getCategories(), Category.class);
     }
 
-    public Mono<ServerResponse> listCategories(ServerRequest request) {
-
-        return categoryService
-                .getCategories()
-                .collectList()
-                .flatMap(categories -> ServerResponse.ok()
-                        .body(BodyInserters.fromValue(categories))
-                );
+    public Mono<ServerResponse> addCategory(ServerRequest request) {
+        return request.bodyToMono(Category.class)
+                .flatMap(categoryService::saveCategory)
+                .flatMap(category -> ServerResponse.created(
+                        UriComponentsBuilder.fromPath(("/{id}")).buildAndExpand(category.getId()).toUri()
+                ).bodyValue(category));
     }
 }
