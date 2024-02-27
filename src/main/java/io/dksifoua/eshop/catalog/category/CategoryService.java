@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
+
 @Service
 public class CategoryService {
 
@@ -19,5 +21,9 @@ public class CategoryService {
 
     public Mono<Category> saveCategory(Category category) {
         return categoryRepository.save(category);
+    }
+
+    public Mono<Void> deleteCategory(String id) {
+        return categoryRepository.deleteAllById(Collections.singleton(id));
     }
 }

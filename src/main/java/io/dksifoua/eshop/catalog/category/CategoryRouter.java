@@ -22,4 +22,10 @@ public class CategoryRouter {
         RequestPredicate predicate = RequestPredicates.POST(categoryEndpoint);
         return RouterFunctions.route(predicate, categoryHandler::addCategory);
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> removeCategoryRouterFunction(CategoryHandler categoryHandler) {
+        RequestPredicate predicate = RequestPredicates.DELETE(categoryEndpoint + "/{id}");
+        return RouterFunctions.route(predicate, categoryHandler::removeCategory);
+    }
 }
