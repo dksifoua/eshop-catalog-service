@@ -1,4 +1,4 @@
-# EShop Product Catalog Service
+[![Makefile CI](https://github.com/dksifoua/eshop-product-catalog-service/actions/workflows/build-ci.yaml/badge.svg)](https://github.com/dksifoua/eshop-product-catalog-service/actions/workflows/build-ci.yaml)
+[![codecov](https://codecov.io/gh/dksifoua/eshop-product-catalog-service/graph/badge.svg?token=SWkcmvCaEY)](https://codecov.io/gh/dksifoua/eshop-product-catalog-service)
 
-![Build CI](https://github.com/dksifoua/eshop-catalog-service/actions/workflows/build-ci.yaml/badge.svg)
-![Codecov](https://img.shields.io/codecov/c/github/dksifoua/eshop-catalog-service?token=SWkcmvCaEY)
+# EShop Product Catalog Service
