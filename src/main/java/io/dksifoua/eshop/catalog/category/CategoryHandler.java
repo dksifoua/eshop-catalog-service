@@ -26,4 +26,9 @@ public class CategoryHandler {
                         UriComponentsBuilder.fromPath(("/{id}")).buildAndExpand(category.getId()).toUri()
                 ).bodyValue(category));
     }
+
+    public Mono<ServerResponse> removeCategory(ServerRequest request) {
+        return categoryService.deleteCategory(request.pathVariable("id"))
+                .then(ServerResponse.noContent().build());
+    }
 }
