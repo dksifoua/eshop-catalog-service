@@ -26,4 +26,12 @@ public class CategoryService {
     public Mono<Void> deleteCategory(String id) {
         return categoryRepository.deleteAllById(Collections.singleton(id));
     }
+
+    public Mono<Category> updateCategory(String id, Category updatedCategory) {
+        return categoryRepository.findById(id)
+                .flatMap(category -> {
+                    updatedCategory.setId(category.getId());
+                    return categoryRepository.save(updatedCategory);
+                });
+    }
 }

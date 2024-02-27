@@ -31,4 +31,11 @@ public class CategoryHandler {
         return categoryService.deleteCategory(request.pathVariable("id"))
                 .then(ServerResponse.noContent().build());
     }
+
+    public Mono<ServerResponse> updateCategory(ServerRequest request) {
+        return request.bodyToMono(Category.class)
+                .flatMap(category -> categoryService.updateCategory(request.pathVariable("id"), category))
+                .flatMap(category -> ServerResponse.ok().bodyValue(category))
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
 }

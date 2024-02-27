@@ -14,6 +14,8 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureWebTestClient
 @SpringBootTest(
@@ -51,7 +53,7 @@ public class CategoryHandlerIntegrationTests {
                 .expectBody(Category.class)
                 .consumeWith(response -> {
                     Category categoryResponse = response.getResponseBody();
-                    assert categoryResponse != null;
+                    assertNotNull(categoryResponse);
                     Assertions.assertNotNull(categoryResponse.getAudit().getCreatedAt());
                     Assertions.assertNotNull(categoryResponse.getAudit().getUpdatedAt());
 
@@ -71,6 +73,34 @@ public class CategoryHandlerIntegrationTests {
 
     @Test
     @Order(3)
+    public void updateCategoryTest() {
+        Category updatedCategory = Category.builder()
+                .name("Furniture")
+                .description("Wide range of furniture for home, office, and outdoors.")
+                .active(category.getActive())
+                .audit(category.getAudit())
+                .build();
+        webTestClient.put().uri(categoryEndpoint + "/{id}", category.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(updatedCategory), Category.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Category.class)
+                .consumeWith(response -> {
+                    Category categoryResponse = response.getResponseBody();
+                    assertNotNull(categoryResponse);
+                    assertEquals(category.getId(), categoryResponse.getId());
+                    assertEquals(updatedCategory.getName(), categoryResponse.getName());
+                    assertEquals(updatedCategory.getDescription(), categoryResponse.getDescription());
+                    assertEquals(updatedCategory.getActive().getFrom(), categoryResponse.getActive().getFrom());
+                    assertEquals(updatedCategory.getAudit().getCreatedAt(), categoryResponse.getAudit().getCreatedAt());
+                    assertTrue(updatedCategory.getAudit().getUpdatedAt()
+                            .isBefore(categoryResponse.getAudit().getUpdatedAt()));
+                });
+    }
+
+    @Test
+    @Order(4)
     public void removeCategoryTest() {
         webTestClient.delete().uri(categoryEndpoint + "/{id}", category.getId()).exchange()
                 .expectStatus().isNoContent();
