@@ -13,7 +13,10 @@ public class TestEShopProductCatalogServiceApplication {
     @Bean
     @ServiceConnection
     MongoDBContainer mongoDbContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo"));
+        DockerImageName dockerImageName = DockerImageName
+                .parse("mongodb/mongodb-community-server:latest")
+                .asCompatibleSubstituteFor("mongo");
+        return new MongoDBContainer(dockerImageName);
     }
 
     public static void main(String[] args) {

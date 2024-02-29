@@ -1,12 +1,12 @@
 package io.dksifoua.eshop.catalog.category;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
-@Configuration
+@Component
 public class CategoryHandler {
 
     private final CategoryService categoryService;
@@ -35,7 +35,7 @@ public class CategoryHandler {
     public Mono<ServerResponse> updateCategory(ServerRequest request) {
         return request.bodyToMono(Category.class)
                 .flatMap(category -> categoryService.updateCategory(request.pathVariable("id"), category))
-                .flatMap(category -> ServerResponse.ok().bodyValue(category))
+                .flatMap(updatedCategory -> ServerResponse.ok().bodyValue(updatedCategory))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 }
