@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -54,11 +55,31 @@ public class CategoryHandlerIntegrationTests {
                 .consumeWith(response -> {
                     Category categoryResponse = response.getResponseBody();
                     assertNotNull(categoryResponse);
-                    Assertions.assertNotNull(categoryResponse.getAudit().getCreatedAt());
-                    Assertions.assertNotNull(categoryResponse.getAudit().getUpdatedAt());
+                    assertNotNull(categoryResponse.getAudit().getCreatedAt());
+                    assertNotNull(categoryResponse.getAudit().getUpdatedAt());
 
                     category = categoryResponse;
-                });
+                }).consumeWith(System.out::println);
+    }
+
+    @Test
+    @Order(2)
+    public void addExistingCategoryTest() {
+        Category anExistingCategory = Category.builder()
+                .id(null)
+                .name(category.getName())
+                .description(category.getDescription())
+                .parentId(category.getParentId())
+                .active(category.getActive())
+                .audit(category.getAudit())
+                .build();
+        webTestClient.post().uri(categoryEndpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(anExistingCategory), Category.class)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.CONFLICT)
+                .expectBody()
+                .consumeWith(System.out::println);
     }
 
     @Test
